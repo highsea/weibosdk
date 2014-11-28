@@ -1,0 +1,86 @@
+<html>
+<head>
+	<title>展示用户粉丝 ce5517e9adb296420bff67ee71a66d10</title>
+</head>
+<body>
+
+<!-- <p><span>appkey(source)：</span><input type="text" class="appkey" value="1865802333" ></p>
+<p><span>user_id：</span><input type="text" class="user_id" value="3216856147" ></p>
+<p><span>screen_name：</span><input type="text" class="screen_name" value="苇笛书生" ></p>
+
+<input Type="button" id="submit" value=" 提 交 "> -->
+
+
+<script src="https://a.alipayobjects.com/u/js/201204/2S07Fhc1TN.js"></script>
+<script type="text/javascript">
+/*$(document).ready(function(){
+	var appkey = $('.appkey'),
+		user_id = $('.user_id'),
+		screen_name = $('.screen_name');
+	$('#submit').click(function(){
+	var html="";
+		$.ajax({
+			url:'http://api.t.sina.com.cn/users/show.json',
+			Type:'GET',
+			data:{
+				source:appkey.val(),
+				user_id:user_id.val(),
+				//screen_name:encodeURIComponent(screen_name.val())
+			},
+			dataType:'json',
+			cache:false,
+			//jsonpCallback : "msg",
+			success:function(msg){
+				if(msg){
+					html += "<ul>";
+					html += "<li>ID:"+msg.id+"</li>";
+					html += "<li>昵称:"+msg.screen_name+"</li>";
+					html += "<li>粉丝数:"+msg.followers_count+"</li>";
+					html += "<li>关注:"+msg.friends_count+"</li>";
+					html += "<li>微博数:"+msg.statuses_count+"</li>";
+					html +="</ul>";
+					document.write(html);
+				}
+				else{
+					alert('调用数据不存在!');
+				}
+			}
+		});
+	});
+});*/
+
+
+$(function(){
+  var html="";
+  $.ajax({
+    url:'https://api.weibo.com/2/users/show.json?source=1865802333&uid=1865802333',   //参数与v1接口相似
+    type:'GET',
+    dataType:'jsonp',   //[重要],默认是支持jsonp格式数据的返回可解决跨域问题；
+    cache:false,
+    success:function(msg){
+      //获取返回信息
+      if(msg!='' && msg!=null)
+      {
+        html += "<ul>";
+        html += "<li>ID:"+msg.data.id+"</li>";
+        html += "<li>昵称:"+msg.data.screen_name+"</li>";
+        html += "<li>粉丝数:"+msg.data.followers_count+"</li>";
+        html += "<li>关注:"+msg.data.friends_count+"</li>";
+        html += "<li>微博数:"+msg.data.statuses_count+"</li>";
+        html +="</ul>";
+        document.write(html);
+      }
+      else
+      {
+        alert('调用数据不存在!');
+      }        
+    }
+  });
+});
+
+</script>
+
+
+
+</body>
+</html>

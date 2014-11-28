@@ -1,6 +1,6 @@
-<?php include_once('include/head.php') ?>
+<?php 
 
-<?php
+include_once('include/head.php');
 
 $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
 $ms  = $c->home_timeline(); // 获取当前登录用户及其所关注用户的最新微博
