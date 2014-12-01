@@ -5,6 +5,14 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 include_once( 'config.php' );
 include_once( 'saetv2.ex.class.php' );
 
+$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+
+if (!isset($_SESSION['token']['access_token'])) {
+    header("Location: http://play.highsea90.com/weibosdk/login.php");
+    exit;
+}
+ 
+//确保重定向后，后续代码不会被执行 
 
 
 ?>

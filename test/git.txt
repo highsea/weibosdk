@@ -1,0 +1,11 @@
+git.txt
+https://github.com/highsea/weibosdk.git
+sublime text
+import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+
+
+输入： sudo vim /etc/hosts 或者 sudo vi /etc/hosts也可以
+先输入键盘上的i，代表对文件进行编辑
+现在即可对hosts里的内容进行编辑，把需要修改的host写入
+编辑完成后，先按 esc
+然后按 shift + ： ，再输入 wq ，最后回车，修改完成

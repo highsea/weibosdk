@@ -2,7 +2,6 @@
 
 include_once('include/head.php');
 
-$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
 $ms  = $c->home_timeline(); // 获取当前登录用户及其所关注用户的最新微博
 //$me = $c->verify_credentials();
 $uid_get = $c->get_uid();
@@ -13,34 +12,59 @@ $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
 ?>
 <div class="container">
     <h2 data-token="<?php echo $_SESSION['token']['access_token'];  ?>"><?=$user_message['screen_name']?>,您好！ </h2>
+<!--     <form action="" class="row">
+        <div class="col-sm-3">
+            <input type="text" name="avatar" class="form-control" placeholder="更新头像url">
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" class="btn btn-primary" value="更新头像 ">
+        </div>
+    </form> -->
 
     
     <h2 align="left">发送新微博</h2>
 
     <div class="row">
         <form action="" >
-            <div class="col-sm-6">
-                <input type="text" name="text" class="form-control" placeholder="请输入………">
+            <div class="col-sm-3">
+                <input type="text" name="text" class="form-control" placeholder="文字内容">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="pic" class="form-control" placeholder="图片url">
             </div>
             <div class="col-sm-2">
-                <input type="submit" class="btn btn-primary" value=" 提 交 ">
+                <input type="submit" class="btn btn-primary" value=" 发 布 ">
             </div>
-
         </form>
     </div>
-    
+
+<?php
+if( isset($_REQUEST['text']) ||isset($_REQUEST['avatar']) ){
+    if(isset($_REQUEST['pic']) ){
+        $rr= $c ->upload( $_REQUEST['text'] , $_REQUEST['pic'] );
+        echo"<p>图片文字，发送完成</p>" ; 
+    /*}elseif(isset($_REQUEST['avatar']  ) ){
+        $rr= $c->update_avatar( $_REQUEST['avatar'] );
+        echo "头像更新成功";*/
+    }else{
+        $rr= $c->update( $_REQUEST['text'] ); 
+        //header("Location: http://play.highsea90.com/weibosdk/login.php");
+        echo"<p>文字发送完成</p>" ; 
+    }            
+}
+?>
 <!--  -->
 
 <!--  -->
 <?php
-if( isset($_REQUEST['text']) ) {
+/*if( isset($_REQUEST['text']) ) {
     $ret = $c->update( $_REQUEST['text'] ); //发送微博
     if ( isset($ret['error_code']) && $ret['error_code'] > 0 ) {
         echo "<p>发送失败，错误：{$ret['error_code']}:{$ret['error']}</p>";
     } else {
         echo "<p>发送成功</p>";
     }
-}
+}*/
 ?>
 <!--  -->
 
@@ -48,16 +72,18 @@ if( isset($_REQUEST['text']) ) {
 <?php if( is_array( $ms['statuses'] ) ): ?>
     <?php foreach( $ms['statuses'] as $item ): ?>
 
-<div class="media">
+<div class="media bordertop">
   <a class="media-left media-middle" href="http://weibo.com/<?=$item['user']['id']?>" title="<?=$item['user']['name']?>" target="_blank">
     <img src="<?=$item['user']['profile_image_url']?>" >
   </a>
+
   <div class="media-body">
     <h4 class="media-heading" data-mid="<?=$item['mid']?>" ><a href="http://weibo.com/<?=$item['user']['id']?>" target="_blank" ><?=$item['user']['screen_name']?></a></h4>
     <p><?=$item['text']; ?></p>
+    <p><a href="<?=$item['original_pic']?>" target="_blank"><img src="<?=$item['thumbnail_pic']?>"></a></p>
     
     <p><?php echo "转发：".$item['reposts_count']."；评论：".$item['comments_count']."；来源：".$item['source'];?></p>
-    <p>时间：<?=$item['created_at']; ?></p>
+    <p>时间：<?=$item['created_at']; ?>地点：<?=$item['ago']['province']?><a href="<?=$item['user']['avatar_hd']?>" target="_blank">高清头像</a></p>
     <div class="tips none" style="background:#fff url(<?=$item['user']['avatar_large']?>) center right no-repeat">
         <ul style="padding-right:200px;margin-right:4px">
             <li><?php echo $item['user']['name'];echo $item['user']['verified']=='1'?' V ':''; ?>【<?=$item['user']['verified_reason']==''?' 未认证 ':$item['user']['verified_reason']?>】<? echo $item['user']['gender']=='m'?'：男 ':'：女 ';?><?php

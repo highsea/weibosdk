@@ -4,3 +4,4 @@
 .tips b{font: bold 1em/1.5em 'Microsoft YaHei';color: #f60;}
 .media-body{position: relative;}
 .media-heading{cursor: pointer;}
+.bordertop{border-top: 2px solid #ccc;}

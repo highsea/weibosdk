@@ -2,8 +2,8 @@
 <?php include_once('include/head.php') ?>
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 <?php 
-$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
-$code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
+/*$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+$code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );*/
 ?>
 
 <div class="container">
@@ -14,7 +14,7 @@ $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
 	<p>不断完善中……</p>
 	<h1>关注作者：<wb:follow-button uid="3216856147" type="red_4" width="100%" height="64" ></wb:follow-button> </h1>
 	<!-- 授权按钮 -->
-    <p><a href="<?=$code_url?>"><img src="images/weibo_login.png" title="点击进入授权页面" alt="点击进入授权页面" border="0" /></a></p>
+    <!-- <p><a href="<?=$code_url?>"><img src="images/weibo_login.png" title="点击进入授权页面" alt="点击进入授权页面" border="0" /></a></p> -->
 
 </div>
 
