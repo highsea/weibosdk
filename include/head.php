@@ -5,14 +5,14 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 include_once( 'config.php' );
 include_once( 'saetv2.ex.class.php' );
 
-$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+$c = new SaeTClientV2( WB_AKEY ,
+				       WB_SKEY , 
+				       $_SESSION['token']['access_token'] );
 
 if (!isset($_SESSION['token']['access_token'])) {
     header("Location: http://play.highsea90.com/weibosdk/login.php");
     exit;
 }
- 
-//确保重定向后，后续代码不会被执行 
 
 
 ?>
@@ -36,5 +36,6 @@ if (!isset($_SESSION['token']['access_token'])) {
         <li role="presentation"><a href="index.php">首页</a></li>
         <li role="presentation"><a href="homelist.php">我的主页</a></li>
         <li role="presentation"><a href="fans.php">粉丝页</a></li>
+        <li role="presentation"><a href="weibolist.php">微博列表</a></li>
     </ul>
 </div>
