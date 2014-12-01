@@ -6,19 +6,40 @@ include_once('include/head.php');
 //$me = $c->verify_credentials();
 $uid_get = $c->get_uid();
 
-//根据uid获取用户等基本信息 array(23) var_dump($user_message['status']);
-$uid = $uid_get['uid'];
-$user_message = $c->show_user_by_id($uid);
+//根据uid获取用户等基本信息 array(23) var_dump($myAll_id['status']);
+
 //根据 screen_name 获取用户基本信息 array(48) var_dump ($myAll);
-$screen_name = $user_message['screen_name'];
+
+
+/*//根据用户 screen_name 获取粉丝
+$screen_name = $myAll_id['screen_name'];
+$fansAll = $c->followers_ids_by_name($screen_name, 0, 50);
+//根据用户 id 获取粉丝
+$fans_id = $c -> followers_ids_by_id($uid, 0, 50);*/
+
+
+
+$uid = $uid_get['uid'];
+//根据用户id
+$myAll_id = $c->show_user_by_id($uid);
+$screen_name = $myAll_id['screen_name'];
+
+
+//根据用户昵称
 $myAll = $c->show_user_by_name($screen_name);
+//判断提交的 搜索参数
 if( isset($_REQUEST['search']) ) {
-    //$ret = $c->update( $_REQUEST['search'] ); //发送微博
-    $myAll = $c->show_user_by_name($_REQUEST['search']);
+
+    if (is_numeric($_REQUEST['search'])) {
+        $myAll = $c->show_user_by_id($_REQUEST['search']);
+    }else{
+        //提交的 用户查询
+        $myAll = $c->show_user_by_name($_REQUEST['search']);
+    }
 }
 
 
-//$fansAll = $c->followers_ids_by_name($screen_name);
+//$fansAll = $c->followers_ids_by_name($screen_name); //followers_by_name
 ?>
 
 <div class="container">
@@ -39,13 +60,12 @@ if( isset($_REQUEST['search']) ) {
 
 <hr>
 
-
-
 <?php 
-if ($user_message['screen_name'] === false || $user_message['screen_name'] === null) {
+if ($myAll_id['screen_name'] === false || $myAll_id['screen_name'] === null) {
     echo "错误，请刷新";
     die();
 }?>
+
 
 <?php if( is_array( $myAll) ): ?>
 <div class="row">
@@ -78,7 +98,6 @@ if ($user_message['screen_name'] === false || $user_message['screen_name'] === n
 </div>
 <?php endif; ?>
 
-
 <!--     <form action="" class="row">
         <div class="col-sm-3">
             <input type="text" name="avatar" class="form-control" placeholder="更新头像url">
@@ -89,6 +108,11 @@ if ($user_message['screen_name'] === false || $user_message['screen_name'] === n
     </form> -->
 </div>
 
+<?php
+echo "<pre class='none'>";
+var_dump($myAll);
+echo "</pre>";
+?>
 
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="../api/bootstrap/js/bootstrap.min.js"></script>
